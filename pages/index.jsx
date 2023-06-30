@@ -1,11 +1,14 @@
 import React from "react";
 import dynamic from 'next/dynamic';
+import CandyMachine from "../components/CandyMachine";
+import { useWallet } from "@solana/wallet-adapter-react";
 
-// Constantes
 const TWITTER_HANDLE = "web3dev_";
 const TWITTER_LINK = `https://twitter.com/${TWITTER_HANDLE}`;
 
 const Home = () => {
+
+  const wallet = useWallet()
 
   const WalletMultiButtonDynamic = dynamic(
     async () =>
@@ -28,7 +31,7 @@ const Home = () => {
               <div className="header-container">
                   <p className="header">🍭 Candy Drop</p>
                   <p className="sub-text">Máquina de NFTs com cunhagem justa</p>
-                  {renderNotConnectedContainer()}
+                  {wallet.publicKey ? <CandyMachine walletAddress={wallet} /> : renderNotConnectedContainer()}
               </div>
               <div className="footer-container">
                   <img alt="Twitter Logo" className="twitter-logo" src="twitter-logo.svg" />
